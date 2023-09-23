@@ -1,18 +1,28 @@
 name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+on:
+    # События, которые запускают jobs
+     push:
+       branches: [ "main" ]
+     pull_request:
+       branches: [ "main" ]
+# jobs запускаются параллельно, если не указана последовательность
 jobs:
-  Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+    # Название job вы можете назвать как угодно
+    my_build_job:
+      # Операционная система в виртуальной машине, в которой запускаются процессы
+      runs-on: ubuntu-latest
+        # Шаги
+        steps:
+          # Actions от github: проверяет репозиторий, гит и т.д.
+          - uses: actions/checkout@v3
+
+          # Пример однолинейного простого скрипта shell
+          - name: Run a one-line script
+            run: echo Hello, world!
+
+          # Пример многолинейного скрипта shell
+          - name: Run a multi-line script
+            run: |
+                echo Add other actions to build,
+                echo test, and deploy your project.
